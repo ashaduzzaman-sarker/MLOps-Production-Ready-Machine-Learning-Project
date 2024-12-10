@@ -3,7 +3,6 @@ pandas
 gdown
 dvc
 mlflow
-setuptools
 notebook
 numpy
 matplotlib
@@ -17,5 +16,6 @@ types-PyYAML
 scipy
 Flask
 Flask-Cors
+setuptools
 Pylance
 -e .
