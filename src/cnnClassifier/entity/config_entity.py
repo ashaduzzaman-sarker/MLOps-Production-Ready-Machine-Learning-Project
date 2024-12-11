@@ -1,9 +1,16 @@
-from dataclasses import dataclasses
+from dataclasses import dataclass
 from pathlib import Path
 
-@dataclasses(frozen=True)
+# @dataclass(frozen=True)
+# class DataIngestionConfig:
+#     root_dir: Path
+#     source_URL: str
+#     locate_data_file: Path
+#     unzip_dir: Path
+
+@dataclass
 class DataIngestionConfig:
-    root_dir: Path
+    root_dir: str
     source_URL: str
-    locate_data_file: Path
-    unzip_dir: Path
+    local_data_file: str
+    unzip_dir: str

@@ -1,113 +1,197 @@
 import os
-from box.exceptions import BoxValueError
-import yaml
-from cnnClassifier import logger
 import json
+import yaml
 import joblib
-from ensure import ensure_annotations
-from box import ConfigBox
-from pathlib import Path
-from typing import Any
 import base64
+import logging
+from pathlib import Path
+from box import ConfigBox
+from box.exceptions import BoxValueError
+from ensure import ensure_annotations
+from typing import Any, Union
+
+# Set up logging
+logging_str = "[%(asctime)s: %(levelname)s: %(module)s: %(message)s]"
+log_dir = "logs"
+log_filepath = os.path.join(log_dir, "running_logs.log")
+os.makedirs(log_dir, exist_ok=True)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format=logging_str,
+    handlers=[
+        logging.FileHandler(log_filepath),
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger("cnnClassifierLogger")
+
+# Utility Functions
 
 @ensure_annotations
 def read_yaml(path_to_yaml: Path) -> ConfigBox:
-    """reads yaml file and returns
+    """Reads a YAML file and returns its content as a ConfigBox object.
 
     Args:
-        path_to_yaml (str): path like input
+        path_to_yaml (Path): Path to the YAML file.
 
     Raises:
-        ValueError: if yaml file is empty
-        e: empty file
+        ValueError: If the YAML file is empty.
+        Exception: For any other exception during file read.
 
     Returns:
-        ConfigBox: ConfigBox type
+        ConfigBox: Parsed YAML content.
     """
     try:
         with open(path_to_yaml) as yaml_file:
             content = yaml.safe_load(yaml_file)
-            logger.info(f"yaml file: {path_to_yaml} loaded successfully")
+            logger.info(f"YAML file loaded successfully from: {path_to_yaml}")
             return ConfigBox(content)
     except BoxValueError:
-        raise ValueError("yaml file is empty")
+        logger.error("YAML file is empty")
+        raise ValueError("YAML file is empty")
     except Exception as e:
+        logger.error(f"Error reading YAML file: {e}")
         raise e
-    
+
 @ensure_annotations
-def save_json(path: Path, data: dict):
-    """save json data
+def create_directories(paths: Union[list, Path], verbose: bool = True):
+    """Creates directories from a list or single path.
 
     Args:
-        path (Path): path to json file
-        data (dict): data to be saved in json file
+        paths (Union[list, Path]): List of directory paths or a single path.
+        verbose (bool, optional): Log directory creation. Defaults to True.
     """
-    with open(path, "w") as f:
-        json.dump(data, f, indent=4)
+    if isinstance(paths, Path):
+        paths = [paths]
+    
+    for path in paths:
+        os.makedirs(path, exist_ok=True)
+        if verbose:
+            logger.info(f"Created directory at: {path}")
 
-    logger.info(f"json file saved at: {path}")
+@ensure_annotations
+def save_json(path: Path, data: dict):
+    """Saves dictionary data to a JSON file.
+
+    Args:
+        path (Path): Path to save the JSON file.
+        data (dict): Dictionary data to save.
+
+    Raises:
+        IOError: If the file cannot be written.
+    """
+    try:
+        with open(path, "w") as f:
+            json.dump(data, f, indent=4)
+        logger.info(f"JSON file saved at: {path}")
+    except IOError as e:
+        logger.error(f"Failed to save JSON file at {path}. Error: {e}")
+        raise e
 
 @ensure_annotations
 def load_json(path: Path) -> ConfigBox:
-    """load json files data
+    """Loads data from a JSON file.
 
     Args:
-        path (Path): path to json file
+        path (Path): Path to the JSON file.
 
     Returns:
-        ConfigBox: data as class attributes instead of dict
+        ConfigBox: Data loaded from the JSON file as a ConfigBox object.
     """
-    with open(path) as f:
-        content = json.load(f)
-
-    logger.info(f"json file loaded successfully from : {path}")
-    return ConfigBox(content)
+    try:
+        with open(path) as f:
+            content = json.load(f)
+        logger.info(f"JSON file loaded successfully from: {path}")
+        return ConfigBox(content)
+    except Exception as e:
+        logger.error(f"Error loading JSON file: {e}")
+        raise e
 
 @ensure_annotations
 def save_bin(data: Any, path: Path):
-    """save binary file
+    """Saves data to a binary file using joblib.
 
     Args:
-        data (Any): data to be saved as binary
-        path (Path): path to binary file
+        data (Any): Data to save.
+        path (Path): Path to the binary file.
     """
-    joblib.dump(value=data, filename=path)
-    logger.info(f"binary file saved at: {path}")    
+    try:
+        joblib.dump(value=data, filename=path)
+        logger.info(f"Binary file saved at: {path}")
+    except Exception as e:
+        logger.error(f"Error saving binary file: {e}")
+        raise e
 
 @ensure_annotations
 def load_bin(path: Path) -> Any:
-    """load binary data
+    """Loads data from a binary file using joblib.
 
     Args:
-        path (Path): path to binary file
+        path (Path): Path to the binary file.
 
     Returns:
-        Any: object stored in the file
+        Any: Data loaded from the binary file.
     """
-    data = joblib.load(path)
-    logger.info(f"binary file loaded from: {path}")
-    return data
+    try:
+        data = joblib.load(path)
+        logger.info(f"Binary file loaded successfully from: {path}")
+        return data
+    except Exception as e:
+        logger.error(f"Error loading binary file: {e}")
+        raise e
 
 @ensure_annotations
 def get_size(path: Path) -> str:
-    """get size in KB
+    """Gets the size of a file in kilobytes.
 
     Args:
-        path (Path): path of the file
+        path (Path): Path to the file.
 
     Returns:
-        str: size in KB
+        str: File size in kilobytes.
     """
-    size_in_kb = round(os.path.getsize(path)/1024)
-    return f"~ {size_in_kb} KB"
+    try:
+        size_in_kb = round(path.stat().st_size / 1024)
+        logger.info(f"Size of {path}: {size_in_kb} KB")
+        return f"~ {size_in_kb} KB"
+    except Exception as e:
+        logger.error(f"Error getting file size: {e}")
+        raise e
 
+@ensure_annotations
+def decodeImage(imgstring: str, fileName: Path):
+    """Decodes a base64 image string and saves it to a file.
 
-def decodeImage(imgstring, fileName):
-    imgdata = base64.b64decode(imgstring)
-    with open(fileName, 'wb') as f:
-        f.write(imgdata)
-        f.close()
+    Args:
+        imgstring (str): Base64 encoded image string.
+        fileName (Path): Path to save the decoded image.
+    """
+    try:
+        imgdata = base64.b64decode(imgstring)
+        with open(fileName, 'wb') as f:
+            f.write(imgdata)
+        logger.info(f"Image decoded and saved at: {fileName}")
+    except Exception as e:
+        logger.error(f"Error decoding image: {e}")
+        raise e
 
-def encodeImageIntoBase64(croppedImagePath):
-    with open(croppedImagePath, "rb") as f:
-        return base64.b64encode(f.read())
+@ensure_annotations
+def encodeImageIntoBase64(imagePath: Path) -> str:
+    """Encodes an image file into a base64 string.
+
+    Args:
+        imagePath (Path): Path to the image file.
+
+    Returns:
+        str: Base64 encoded image string.
+    """
+    try:
+        with open(imagePath, "rb") as f:
+            encoded = base64.b64encode(f.read()).decode('utf-8')
+        logger.info(f"Image encoded from: {imagePath}")
+        return encoded
+    except Exception as e:
+        logger.error(f"Error encoding image: {e}")
+        raise e
