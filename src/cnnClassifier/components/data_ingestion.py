@@ -42,4 +42,8 @@ class DataIngestion:
         os.makedirs(unzip_path, exist_ok=True)
         with zipfile.ZipFile(self.config.local_data_file, 'r') as zip_ref:
             zip_ref.extractall(unzip_path)
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 8abfc0bb21c937c52792a982ac046e55392b4fdf
