@@ -22,5 +22,6 @@ fastapi
 uvicorn
 jinja2
 python-utils
+pymongo[srv]
 python-multipart
 -e .
