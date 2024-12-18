@@ -1,3 +1,2 @@
-# End-to-End-Chest-Cancer-Classification-using-MLflow-DVC
+# MLOps_End-to-End-Chest-Cancer-Classification-using-MLflow-DVC
 
-## Mongodb
