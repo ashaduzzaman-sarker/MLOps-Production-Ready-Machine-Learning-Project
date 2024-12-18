@@ -21,7 +21,5 @@ botocore
 fastapi
 uvicorn
 jinja2
-python-utils
-pymongo
 python-multipart
 -e .
