@@ -9,7 +9,7 @@ from us_visa.components.data_ingestion import DataIngestion
 # from us_visa.components.model_pusher import ModelPusher
 
 
-from us_visa.entity.config_entity import (DataIngestionConfig)
+from us_visa.entity.config_entity import DataIngestionConfig
                                         #   ,
                                         #  DataValidationConfig,
                                         #  DataTransformationConfig,
@@ -17,7 +17,7 @@ from us_visa.entity.config_entity import (DataIngestionConfig)
                                         #  ModelEvaluationConfig,
                                         #  ModelPusherConfig)
 
-from us_visa.entity.artifact_entity import (DataIngestionArtifact)
+from us_visa.entity.artifact_entity import DataIngestionArtifact
 # ,
 #                                             DataValidationArtifact,
 #                                             DataTransformationArtifact,
