@@ -72,9 +72,9 @@ MODEL_TRAINER_MODEL_CONFIG_FILE_PATH: str = os.path.join("config", "model.yaml")
 MODEL EVALUATION related constant 
 """
 MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
-MODEL_BUCKET_NAME = "usvisa-model2024"
+MODEL_BUCKET_NAME = "usvisa-2024" # Bucket name for aws s3
 MODEL_PUSHER_S3_KEY = "model-registry"
 
 
-# APP_HOST = "0.0.0.0"
-# APP_PORT = 8080
+APP_HOST = "0.0.0.0"
+APP_PORT = 8080
