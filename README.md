@@ -2,8 +2,6 @@
 
 # MLOps: Production-Ready Machine Learning Project 🚀
 
----
-
 This repository presents a **comprehensive production-ready machine learning workflow** for predicting **US Visa Approval**. It implements cutting-edge **MLOps principles**, ensuring scalability, reproducibility, and efficient deployment. The project incorporates automated pipelines for data ingestion, validation, transformation, model training, and deployment, with robust CI/CD practices and cloud-native integrations.
 
 
