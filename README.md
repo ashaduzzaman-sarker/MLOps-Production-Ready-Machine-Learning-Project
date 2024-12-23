@@ -2,9 +2,10 @@
 
 # MLOps: Production-Ready Machine Learning Project 🚀
 
+---
+
 This repository presents a **comprehensive production-ready machine learning workflow** for predicting **US Visa Approval**. It implements cutting-edge **MLOps principles**, ensuring scalability, reproducibility, and efficient deployment. The project incorporates automated pipelines for data ingestion, validation, transformation, model training, and deployment, with robust CI/CD practices and cloud-native integrations.
 
----
 
 ## 🚀 Key Highlights
 
@@ -28,7 +29,6 @@ This repository presents a **comprehensive production-ready machine learning wor
   - A user-friendly Flask application for real-time predictions.
   - Deployed on AWS EC2 with a fully responsive and visually appealing frontend.
 
----
 
 ## 🛠️ Tech Stack
 
@@ -42,7 +42,6 @@ This repository presents a **comprehensive production-ready machine learning wor
   - **Version Control**: Git
 - **Visualization**: Matplotlib, Seaborn
 
----
 
 ## 📂 Repository Structure
 
@@ -68,7 +67,6 @@ This repository presents a **comprehensive production-ready machine learning wor
 └── app.py                 # Flask application for serving predictions
 ```
 
----
 
 ## 📊 Workflow Breakdown
 
@@ -104,7 +102,6 @@ This repository presents a **comprehensive production-ready machine learning wor
 3. **Monitoring**:
    - EvidentlyAI integration provides drift detection and performance monitoring.
 
----
 
 ## 🔧 Setup Instructions
 
@@ -139,7 +136,6 @@ This repository presents a **comprehensive production-ready machine learning wor
    python app.py
    ```
 
----
 
 ## 🌐 Deployment
 
@@ -159,7 +155,6 @@ This repository presents a **comprehensive production-ready machine learning wor
    - Automate builds and deployments with `aws.yaml`.
    - Configure secrets in GitHub for secure AWS integration.
 
----
 
 ## 🔍 References
 
@@ -168,7 +163,6 @@ This repository presents a **comprehensive production-ready machine learning wor
   - [EvidentlyAI](https://www.evidentlyai.com/)
   - [MongoDB Atlas](https://account.mongodb.com/account/login)
 
----
 
 ## 🙌 Acknowledgments
 
