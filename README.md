@@ -50,9 +50,10 @@ This repository presents a **comprehensive production-ready machine learning wor
 ├── .github/workflows
 │   └── aws.yaml           # CI/CD workflow configuration
 ├── notebooks              # EDA and feature engineering scripts
-│   ├── 1_EDA_US_visa.ipynb
-│   ├── 2_Feature_Engineering_and_Model_Training.ipynb
-│   └── data_drift_demo_evidently.ipynb
+│   ├── 01_mongodb.ipynb
+│   ├── 02_EDA.ipynb
+│   ├── 03_Data_drift_evidently.ipynb
+│   ├── 04_Feature_Engineering_and_Model_Training.ipynb
 ├── us_visa                # Core machine learning components
 │   ├── components         # Modular pipeline components
 │   ├── configuration      # Cloud and database configurations
@@ -157,18 +158,6 @@ This repository presents a **comprehensive production-ready machine learning wor
 3. **CI/CD with GitHub Actions**:
    - Automate builds and deployments with `aws.yaml`.
    - Configure secrets in GitHub for secure AWS integration.
-
----
-
-## 🖼️ Visual Insights
-
-### Workflow Diagrams
-- **Data Ingestion**:
-  ![Data Ingestion](flowcharts/Data%20Ingestion.png)
-- **Model Training**:
-  ![Model Training](flowcharts/Model%20Trainer.png)
-- **Complete Folder Structure**:
-  ![Folder Structure](flowcharts/folder%20structure.png)
 
 ---
 
