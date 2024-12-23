@@ -115,7 +115,7 @@ This repository presents a **comprehensive production-ready machine learning wor
 ### Installation
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/MLOps-Production-Ready-Project.git
+   git clone https://github.com/ashaduzzaman-sarker/MLOps-Production-Ready-Machine-Learning-Project.git
    cd MLOps-Production-Ready-Project
    ```
 
